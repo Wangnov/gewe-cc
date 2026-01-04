@@ -14,6 +14,7 @@ gewe-cc 是一个命令行工具，允许你通过微信远程控制 Claude Code
 - 🎯 **智能循环**：根据回复自动继续工作或停止
 - ⚡ **零 Python 依赖**：纯 Rust 实现，跨平台支持
 - 🛡️ **会话隔离**：基于 session_id 的状态管理
+- 📝 **Transcript 展示**：内置 HTTP 服务 + 链接卡片查看完整对话
 - 📦 **易于安装**：cargo install 一键安装
 
 ## 📦 安装
@@ -116,7 +117,7 @@ claude plugin list
 gewe-cc on
 ```
 
-或在 Claude Code 中输入：
+或在 Claude Code 中输入自定义hook指令：
 
 **会话级别命令**（只影响当前会话）：
 ```
@@ -124,6 +125,8 @@ gewe-cc on
 >remote-off      # 禁用当前会话的远程模式
 >remote-status   # 查看全局远程模式状态
 ```
+
+或在 Claude Code 外输入终端命令：
 
 **全局级别命令**（影响所有会话）：
 ```bash
@@ -153,6 +156,21 @@ claude
 - `添加单元测试` → Claude 继续工作
 - `优化性能` → Claude 继续工作
 - `停止` → 结束远程模式
+
+## 🔗 Transcript 链接卡片（可选）
+
+如果你希望通过微信收到**完整对话记录链接**，需要先启动内置 HTTP 服务并配置可访问域名：
+
+```bash
+# 1. 启动 transcript HTTP 服务（默认 4400 端口）
+gewe-cc serve
+
+# 2. 配置对外访问域名（建议使用反向代理/内网穿透）
+gewe-cc config --transcript-domain https://transcript.example.com
+```
+
+建议准备缩略图文件：`~/.gewe-cc/assets/thumb.png`（<= 50KB）。
+之后可使用 `gewe-cc send-link` 发送链接卡片并等待回复。
 
 ## 📖 命令
 
@@ -208,8 +226,14 @@ gewe-cc config --wxid wxid_new_value
 # 修改监听地址
 gewe-cc config --listen 0.0.0.0:5000
 
+# 修改默认超时（秒，0 表示无限等待）
+gewe-cc config --timeout 300
+
+# 修改 transcript 域名
+gewe-cc config --transcript-domain https://transcript.example.com
+
 # 同时修改多个配置
-gewe-cc config --wxid wxid_new --listen 0.0.0.0:5000
+gewe-cc config --wxid wxid_new --listen 0.0.0.0:5000 --timeout 300
 ```
 
 ### gewe-cc wait-reply
@@ -225,6 +249,9 @@ gewe-cc wait-reply -M "测试消息" --to-wxid wxid_test
 
 # 设置超时（秒）
 gewe-cc wait-reply -M "需要回复" --timeout 60
+
+# 短参数形式
+gewe-cc wait-reply -M "需要回复" -t 60
 
 # 完整示例
 gewe-cc wait-reply -M "【Claude Code】任务完成" --to-wxid wxid_xxx --listen 0.0.0.0:4399 --timeout 300
@@ -242,6 +269,26 @@ gewe-cc notify -M "构建成功"
 gewe-cc notify -M "部署完成" --to-wxid wxid_ops
 ```
 
+### gewe-cc serve
+
+启动 Transcript HTTP 服务（用于展示完整对话记录）
+
+```bash
+# 默认端口 4400
+gewe-cc serve
+
+# 自定义端口
+gewe-cc serve --port 8080
+```
+
+### gewe-cc send-link
+
+发送链接卡片并等待回复（依赖 `transcript_domain` 配置）
+
+```bash
+gewe-cc send-link --session-id <会话ID> --summary "任务完成摘要"
+```
+
 ### gewe-cc hook (内部命令)
 
 处理 Claude Code Hook 事件（由 plugin 调用，非用户命令）
@@ -249,6 +296,7 @@ gewe-cc notify -M "部署完成" --to-wxid wxid_ops
 ```bash
 gewe-cc hook user-prompt-submit < input.json
 gewe-cc hook stop < input.json
+gewe-cc hook notification < input.json
 ```
 
 ## ⚙️ 配置
@@ -268,6 +316,9 @@ channel = "wechat"
 wxid = "wxid_xxxxxxxx"
 listen = "0.0.0.0:4399"
 
+# Transcript 展示域名（用于 send-link）
+transcript_domain = "https://transcript.example.com"
+
 [gewe_cli]
 # gewe-cli 命令路径
 command = "gewe-cli"
@@ -285,6 +336,8 @@ timeout = 0
 │  • init    - 初始化环境              │
 │  • on/off  - 控制远程模式            │
 │  • status  - 查看状态                │
+│  • serve   - Transcript HTTP 服务    │
+│  • send-link - 发送链接卡片           │
 │  • hook    - Hook 处理 (内部)       │
 └─────────────────────────────────────┘
          ↓                    ↓
