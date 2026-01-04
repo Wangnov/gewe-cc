@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1](https://github.com/Wangnov/gewe-cc/compare/v0.1.0...v0.1.1) - 2026-01-04
+
+### Other
+
+- reinitialize release-plz and cargo-dist workflows
+- allow manual dist release from tag input
+- align release-plz and cargo-dist flow
+- release v0.1.0
+
 ## [0.1.0](https://github.com/Wangnov/gewe-cc/releases/tag/v0.1.0) - 2026-01-04
 
 ### Other
