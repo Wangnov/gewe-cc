@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.1] - 2026-01-04
 
+### Bug Fixes
+- **release**: Correct tag name format for workspace ([6c3c72d](6c3c72d6ba28fb61c4b6ad13c5d18c6671820169))
+
+
 ### Build
 - Migrate from release-plz to cargo-release ([c23f6a8](c23f6a8e6dce75403163b3ac619e9b15095f5335))
 
