@@ -34,8 +34,16 @@ cargo build --release
 
 ### 使用安装脚本
 
+查看 [GitHub Releases](https://github.com/wangnov/gewe-cc/releases) 获取最新的安装脚本。
+
+**Linux/macOS:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/wangnov/gewe-cc/main/install.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/wangnov/gewe-cc/releases/latest/download/gewe-cc-installer.sh | sh
+```
+
+**Windows (PowerShell):**
+```powershell
+powershell -c "irm https://github.com/wangnov/gewe-cc/releases/latest/download/gewe-cc-installer.ps1 | iex"
 ```
 
 ## 🚀 快速开始
@@ -310,12 +318,31 @@ cargo test
 
 ### 发布
 
-使用 release-plz 自动管理版本和发布：
+使用 cargo-release 管理版本和发布：
 
 ```bash
-# 创建 PR 更新版本
-# GitHub Actions 会自动处理
+# 安装工具（首次）
+cargo install cargo-release git-cliff
+
+# 发布 patch 版本（0.1.0 -> 0.1.1）
+cargo release patch
+
+# 发布 minor 版本（0.1.0 -> 0.2.0）
+cargo release minor
+
+# 发布 major 版本（0.1.0 -> 1.0.0）
+cargo release major
+
+# 预览（dry-run）
+cargo release patch --dry-run
 ```
+
+cargo-release 会自动：
+- 使用 git-cliff 生成 CHANGELOG.md
+- 更新版本号
+- 创建 tag 并推送
+- 发布到 crates.io
+- 触发 cargo-dist 构建跨平台二进制
 
 ## 🤝 贡献
 
@@ -330,7 +357,8 @@ MIT License - 详见 [LICENSE](./LICENSE) 文件
 - [gewe-cli](https://github.com/wangnov/gewe-cli) - 微信消息收发工具
 - [Claude Code](https://claude.ai/code) - Anthropic 官方 CLI
 - [cargo-dist](https://github.com/axodotdev/cargo-dist) - Rust 二进制分发工具
-- [release-plz](https://github.com/MarcoIeni/release-plz) - 自动版本管理
+- [cargo-release](https://github.com/crate-ci/cargo-release) - 版本管理和发布工具
+- [git-cliff](https://github.com/orhun/git-cliff) - CHANGELOG 生成器
 
 ---
 
