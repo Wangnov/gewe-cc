@@ -1,0 +1,14 @@
+{
+  "name": "gewe-cc-marketplace",
+  "owner": {
+    "name": "wangnov"
+  },
+  "plugins": [
+    {
+      "name": "gewe-cc",
+      "source": "./",
+      "description": "Claude Code 远程协作模式插件，配合 gewe-cc 命令行工具使用",
+      "version": "0.1.0"
+    }
+  ]
+}
