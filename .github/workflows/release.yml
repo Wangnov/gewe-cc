@@ -5,6 +5,7 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
   # Run 'cargo dist plan' (or host + publish-jobs) to determine what tasks we need to do
