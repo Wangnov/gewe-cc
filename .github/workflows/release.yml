@@ -5,12 +5,6 @@ on:
   push:
     tags:
       - "v*"
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Release tag (e.g. v0.1.0)"
-        required: true
-        type: string
 
 jobs:
   # Run 'cargo dist plan' (or host + publish-jobs) to determine what tasks we need to do
@@ -18,12 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       val: ${{ steps.plan.outputs.manifest }}
-      tag: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.ref_name) || '' }}
-      tag-flag: ${{ (github.event_name == 'workflow_dispatch' && format('--tag={0}', github.event.inputs.tag)) || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && format('--tag={0}', github.ref_name)) || '' }}
-      publishing: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) }}
+      tag: ${{ !github.event.pull_request && github.ref_name || '' }}
+      tag-flag: ${{ !github.event.pull_request && format('--tag={0}', github.ref_name) || '' }}
+      publishing: ${{ !github.event.pull_request }}
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TAG_FLAG: ${{ (github.event_name == 'workflow_dispatch' && format('--tag={0}', github.event.inputs.tag)) || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && format('--tag={0}', github.ref_name)) || '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,7 +25,7 @@ jobs:
         run: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.30.3/cargo-dist-installer.sh | sh"
       - id: plan
         run: |
-          cargo dist plan $TAG_FLAG --output-format=json > dist-manifest.json
+          cargo dist plan ${{ !github.event.pull_request && format('--tag={0}', github.ref_name) || '' }} --output-format=json > dist-manifest.json
           echo "cargo dist plan ran successfully"
           cat dist-manifest.json
           echo "manifest=$(jq -c "." dist-manifest.json)" >> "$GITHUB_OUTPUT"
