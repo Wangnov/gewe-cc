@@ -1,0 +1,21 @@
+# cargo-release configuration
+# See: https://github.com/crate-ci/cargo-release/blob/master/docs/reference.md
+
+# Branch control
+allow-branch = ["main"]
+
+# Git commit and tag settings
+sign-commit = false
+sign-tag = false
+push-remote = "origin"
+
+# Commit and tag message templates
+pre-release-commit-message = "chore: release {{crate_name}} v{{version}}"
+tag-message = "chore: release {{crate_name}} v{{version}}"
+tag-prefix = "v"
+
+# Pre-release hook: generate CHANGELOG using git-cliff
+pre-release-hook = ["git", "cliff", "-o", "CHANGELOG.md", "--tag", "{{version}}"]
+
+# Publishing settings
+publish = true

@@ -1,3 +1,0 @@
-[workspace]
-release_always = false
-git_release_enable = false
