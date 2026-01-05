@@ -215,10 +215,9 @@ fn handle_stop(input: HookInput) -> Result<HookDecision> {
             input.session_id
         )
     } else {
-        // 使用默认提示 - 明确指示激活 skill
+        // 使用默认提示 - 强制要求激活 skill
         format!(
-            "🔄 远程模式已启用 - 如果未激活，请立即激活 remote-control skill\n\n\
-             执行：/gewe-cc:remote-control\n\n\
+            "⚠️ Stop 已阻止 - 立即执行 /gewe-cc:remote-control\n\n\
              上下文信息：\n\
              - 项目: {}\n\
              - 目录: {}\n\
