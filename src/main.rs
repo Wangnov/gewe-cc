@@ -6,6 +6,7 @@ mod hook;
 mod init;
 mod notify;
 mod remote;
+mod sanitize;
 mod server;
 mod transcript;
 

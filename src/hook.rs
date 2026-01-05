@@ -4,6 +4,7 @@ use std::io::{self, Read};
 use std::path::PathBuf;
 
 use crate::config::ConfigManager;
+use crate::sanitize::{sanitize_wxid, sanitize_listen_addr};
 use crate::server::SessionRegistry;
 
 #[derive(Debug, Deserialize, Default)]
@@ -109,7 +110,8 @@ fn handle_remote_on(config_mgr: &ConfigManager) -> Result<HookDecision> {
          - 监听地址：{}\n\
          - 标记文件：~/.gewe-cc/remote.lock\n\n\
          任务完成后将自动等待微信指令。",
-        config.notification.wxid, config.notification.listen
+        sanitize_wxid(&config.notification.wxid),
+        sanitize_listen_addr(&config.notification.listen)
     );
 
     Ok(HookDecision::Block { reason })
@@ -148,7 +150,9 @@ fn handle_remote_status(config_mgr: &ConfigManager) -> Result<HookDecision> {
              - 目标微信：{}\n\
              - 监听地址：{}\n\
              - 标记文件：~/.gewe-cc/remote.lock",
-            status, config.notification.wxid, config.notification.listen
+            status,
+            sanitize_wxid(&config.notification.wxid),
+            sanitize_listen_addr(&config.notification.listen)
         )
     } else {
         format!(

@@ -1,6 +1,7 @@
 use anyhow::Result;
 use colored::*;
 use crate::config::ConfigManager;
+use crate::sanitize::{sanitize_wxid, sanitize_listen_addr};
 
 pub fn handle_on() -> Result<()> {
     let config_mgr = ConfigManager::new()?;
@@ -13,8 +14,8 @@ pub fn handle_on() -> Result<()> {
     println!("{}", "═══════════════════════════════════════".green());
     println!();
     println!("{}", "配置信息:".bright_white().bold());
-    println!("  {} {}", "目标微信:".dimmed(), config.notification.wxid);
-    println!("  {} {}", "监听地址:".dimmed(), config.notification.listen);
+    println!("  {} {}", "目标微信:".dimmed(), sanitize_wxid(&config.notification.wxid));
+    println!("  {} {}", "监听地址:".dimmed(), sanitize_listen_addr(&config.notification.listen));
     println!("  {} ~/.gewe-cc/remote.lock", "标记文件:".dimmed());
     println!();
     println!("{}", "任务完成后将自动等待微信指令。".dimmed());
@@ -69,8 +70,8 @@ pub fn handle_status() -> Result<()> {
         println!("  {}: {}", "状态".bright_white().bold(), "✅ 已启用".green());
         println!();
         println!("  {}:", "配置".bright_white().bold());
-        println!("    {} {}", "目标微信:".dimmed(), config.notification.wxid);
-        println!("    {} {}", "监听地址:".dimmed(), config.notification.listen);
+        println!("    {} {}", "目标微信:".dimmed(), sanitize_wxid(&config.notification.wxid));
+        println!("    {} {}", "监听地址:".dimmed(), sanitize_listen_addr(&config.notification.listen));
         println!("    {} ~/.gewe-cc/remote.lock", "标记文件:".dimmed());
         println!();
         println!("  {} gewe-cc off", "禁用:".dimmed());
@@ -98,8 +99,8 @@ pub fn handle_config(wxid: Option<String>, listen: Option<String>, timeout: Opti
         let config = config_mgr.load()?;
 
         println!("{}", "当前配置:".bright_white().bold());
-        println!("  {} {}", "目标微信:".dimmed(), config.notification.wxid);
-        println!("  {} {}", "监听地址:".dimmed(), config.notification.listen);
+        println!("  {} {}", "目标微信:".dimmed(), sanitize_wxid(&config.notification.wxid));
+        println!("  {} {}", "监听地址:".dimmed(), sanitize_listen_addr(&config.notification.listen));
         println!("  {} {}", "超时时间:".dimmed(), if config.gewe_cli.timeout == 0 {
             "无限等待".to_string()
         } else {
@@ -141,11 +142,11 @@ pub fn handle_config(wxid: Option<String>, listen: Option<String>, timeout: Opti
     println!();
 
     if let Some(wxid) = wxid {
-        println!("  {} {}", "目标微信:".dimmed(), wxid);
+        println!("  {} {}", "目标微信:".dimmed(), sanitize_wxid(&wxid));
     }
 
     if let Some(listen) = listen {
-        println!("  {} {}", "监听地址:".dimmed(), listen);
+        println!("  {} {}", "监听地址:".dimmed(), sanitize_listen_addr(&listen));
     }
 
     if let Some(timeout_val) = timeout {
