@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2026-01-05
+
+### Documentation
+- 添加 cargo-binstall 安装方式 ([a23b27a](a23b27ad0df33a80bbdc0a8471842a0bddb8df8c))
+
+
+### Features
+- 添加敏感信息脱敏功能 ([45ee3c6](45ee3c65d606ac0e3282ce02786b29b2976bd269))
+
 ## [0.1.2] - 2026-01-05
 
 ### Documentation
@@ -11,6 +20,10 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 - 优化 stop hook 提示词，增强指令性 ([450466b](450466b0464009974aca4ff8b076cc7b41ec80d9))
+
+
+### Miscellaneous
+- Release gewe-cc v0.1.2 ([4037af3](4037af303f15acfa84c62ff73c3631dce70d278b))
 
 ## [0.1.1] - 2026-01-04
 

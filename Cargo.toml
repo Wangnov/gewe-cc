@@ -1,6 +1,6 @@
 [package]
 name = "gewe-cc"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 authors = ["wangnov"]
 description = "Claude Code 远程协作模式命令行工具"
