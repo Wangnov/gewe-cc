@@ -25,6 +25,16 @@ gewe-cc 是一个命令行工具，允许你通过微信远程控制 Claude Code
 cargo install gewe-cc
 ```
 
+### 使用 cargo-binstall（更快）
+
+如果你安装了 [cargo-binstall](https://github.com/cargo-bins/cargo-binstall)，可以直接下载预编译二进制：
+
+```bash
+cargo binstall gewe-cc
+```
+
+这比从源码编译快得多，因为会直接从 GitHub Releases 下载预编译的二进制文件。
+
 ### 从源码编译
 
 ```bash
