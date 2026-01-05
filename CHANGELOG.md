@@ -2,10 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2026-01-05
+
+### Documentation
+- Update README with correct install scripts and release process ([c9a2506](c9a25063bab116e905e9e29e85d09ed414579364))
+- Update README with transcript view and fix some words ([a84d3c5](a84d3c511d47830ec1490c080bd41e9bfc121da4))
+
+
+### Features
+- 优化 stop hook 提示词，增强指令性 ([450466b](450466b0464009974aca4ff8b076cc7b41ec80d9))
+
 ## [0.1.1] - 2026-01-04
 
 ### Bug Fixes
 - **release**: Correct tag name format for workspace ([6c3c72d](6c3c72d6ba28fb61c4b6ad13c5d18c6671820169))
+- **ci**: Regenerate cargo-dist workflow ([bbe93ec](bbe93ec6a07d8f077950266445969445c905bc2a))
 
 
 ### Build
@@ -20,6 +31,7 @@ All notable changes to this project will be documented in this file.
 
 ### Miscellaneous
 - Release v0.1.0 ([8091f57](8091f579d32ce280cffc860bfdc9161a979089f5))
+- Release gewe-cc v0.1.1 ([1d8f3e4](1d8f3e4f1ad01d748889c30cc891ad9b651831fa))
 
 ## [0.1.0] - 2026-01-04
 
