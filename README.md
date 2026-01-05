@@ -7,6 +7,10 @@
 
 gewe-cc 是一个命令行工具，允许你通过微信远程控制 Claude Code 的工作流程。当任务完成时，自动发送微信通知并等待你的下一个指令，实现真正的远程协作。
 
+## 📺 演示视频
+
+https://github.com/user-attachments/assets/gewe-cc-example.mp4
+
 ## ✨ 特性
 
 - 🔄 **全局远程模式**：一键启用/禁用远程模式
