@@ -9,7 +9,7 @@ gewe-cc 是一个命令行工具，允许你通过微信远程控制 Claude Code
 
 ## 📺 演示视频
 
-https://github.com/user-attachments/assets/gewe-cc-example.mp4
+https://github.com/user-attachments/assets/ed16c752-54c5-4711-ba5a-d170c0f5b15b
 
 ## ✨ 特性
 
@@ -27,6 +27,7 @@ https://github.com/user-attachments/assets/gewe-cc-example.mp4
 
 ```bash
 cargo install gewe-cc
+
 ```
 
 ### 使用 cargo-binstall（更快）
